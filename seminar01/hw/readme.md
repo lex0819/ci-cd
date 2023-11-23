@@ -35,3 +35,18 @@ https://gitlab.com/lex08191/testpages
 ![access-pages-url.png](./img/access-pages-url.png)
 
 https://testpages-lex08191-5c8b378b5ef14b9e8f4bbf4048f72aa113a2708e3420.gitlab.io/
+
+Пример джоба в пайплайне для гитлаб пейджес:
+
+```bash
+pages:
+  stage: deploy
+  script:
+    - mkdir -p public
+    - cp house.txt public/index.html
+  artifacts:
+    paths:
+      - public
+    only:
+      - main
+```
