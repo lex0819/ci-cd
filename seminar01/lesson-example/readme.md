@@ -81,6 +81,8 @@ artifacts:
 
 ## Runner
 
+Project -> Settings - > CI/CD -> Runners
+
 GitLab Runner — это агент, который собственно и занимается выполнением инструкций из pipeline (специального файла .gitlab-ci.yml).
 
 GitLab Runner — это бинарник, который можно поставить на свой сервер и связать с гитлабом в своём аккаунте.

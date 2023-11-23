@@ -1,0 +1,56 @@
+image: busybox:latest
+
+stages:
+  - build
+  - test
+  - deploy
+
+build-pr:
+  stage: build
+  script:
+    - mkdir -p binaries
+    - cd binaries
+    - echo test1 >> file1.txt
+    - echo test2 >> file2.txt
+    - mkdir -p temp
+    - cd temp
+    - echo test1 >> temp1.txt
+    - echo test2 >> temp2.txt
+  artifacts:
+    paths:
+      - binaries/
+    exclude:
+      - binaries/temp/**/*
+
+build1:
+  stage: build
+  script:
+    - echo "Do your build here"
+    - echo one >> house.txt
+  artifacts:
+    paths:
+      - house.txt
+    expire_in: 30 days
+
+test1:
+  stage: test
+  script:
+    - echo "Do a test here"
+    - echo "For example run a test suite"
+    - grep one house.txt
+
+deploy1:
+  stage: deploy
+  script:
+    - echo "Do your deploy here"
+  environment: production
+
+pages:
+  stage: deploy
+  script:
+    - echo "The site will be deployed to $CI_PAGES_URL"
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

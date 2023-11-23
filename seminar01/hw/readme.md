@@ -16,19 +16,38 @@ https://gitlab.com/lex08191
 
 Пайплайн ничего особо не делает, просто выполняет задачу pages, где указано, что артефакты лежат в папке public.
 
+### runner
+
+Project -> Settings - > CI/CD -> Runners -> New runner
+
+![](./img/runner-created.png)
+
+Установлю раннер в докер на облачный сервер позже, в процессе дальнейшего обучения.
+
 ## Попробовать сохранить артефакт одной из стадий + исключить из папки с артефактами любой файл.
+
+[.gitlab-ci.yml](./.gitlab-ci.yml)
 
 example
 
 ```bash
-artifacts:
-  paths:
-    - binaries/
-  exclude:
-    - binaries/temp/**/*
+build-pr:
+  stage: build
+  script:
+    - mkdir -p binaries
+    - cd binaries
+    - echo test1 >> file1.txt
+    - echo test2 >> file2.txt
+    - mkdir -p temp
+    - cd temp
+    - echo test1 >> temp1.txt
+    - echo test2 >> temp2.txt
+  artifacts:
+    paths:
+      - binaries/
+    exclude:
+      - binaries/temp/**/*
 ```
-
-https://gitlab.com/lex08191/seminar01
 
 ## Попробовать сделать любую gitlab pages.
 
