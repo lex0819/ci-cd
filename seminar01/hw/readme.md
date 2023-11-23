@@ -18,6 +18,16 @@ https://gitlab.com/lex08191
 
 ## Попробовать сохранить артефакт одной из стадий + исключить из папки с артефактами любой файл.
 
+example
+
+```bash
+artifacts:
+  paths:
+    - binaries/
+  exclude:
+    - binaries/temp/**/*
+```
+
 https://gitlab.com/lex08191/seminar01
 
 ## Попробовать сделать любую gitlab pages.
