@@ -56,3 +56,44 @@ Docker image of gitlab-runner is on doker-hub
 See https://hub.docker.com/r/gitlab/gitlab-runner/tags
 
 ## Gitlab pages
+
+Нужно установить и запустить GitLab Pages daemon — это их собственный вебсервер. Он может быть установлен как на одном хосте с гитлабом, так и на отдельном.
+Поставляется он в пакете Omnibus или отдельно.
+
+We can publish static websites directly from a repository in GitLab.
+Only html, scc, js.
+
+Чтобы проект опубликовался на Pages, в корне должен быть файл .gitlab-ci.yaml.
+В нём должна быть определена задача **pages**, в результате выполнения которой собирался артефакт из папки **public**.
+Например:
+
+```yml
+image: openjdk:8
+
+pages: # название таски
+  stage: deploy
+  script:
+    - ./gradlew bundle
+    - mkdir .public
+    - cp -r src/main/web/* .public
+    - cp -r build/bundle/* .public
+    - mv .public public
+  artifacts: # необходимый артефакт
+    paths:
+      - public
+  only: # собирать только из ветки мастера
+    - master
+```
+
+В докер контейнере openjdk выполняется скрипт, запускающий gradle и кладущий результат в папку public.
+
+Затем создается артефакт из этой папки, который и отображается как сайт.
+
+Всё, готово!
+Чтобы понять адрес сайта, нужно зайти в репозитории в **setting → pages**.
+https://your-user-name.gitlab.io/project-name
+
+Exanple about simple html site
+https://gitlab.com/pages/plain-html
+
+see code in the folder [pages-plain-html/](../pages-plain-html/)
