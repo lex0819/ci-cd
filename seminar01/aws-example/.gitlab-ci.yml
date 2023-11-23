@@ -1,0 +1,54 @@
+variables: # variabiles definitions for easier reuse of values.
+  CI_NODE_IMAGE: 'node:16.13.2'
+
+# Pipeline stages
+stages:
+  - install
+  - build
+  - test
+  - deploy
+
+#install job definition
+install:
+  stage: install
+  image: '$CI_NODE_IMAGE' # variable reference
+  script: # Shell script that is executed by the runner.
+    - npm ci
+  cache: # List of files that should be cached between subsequent runs.
+    key:
+      files:
+        - package-lock.json
+    paths: # directories to cache
+      - node_modules
+
+# Build Job definition
+build:
+  stage: build
+  image: $CI_NODE_IMAGE
+  script:
+    - npm run build
+  artifacts: # list of files and directories that are attached to the job
+    paths:
+      - dist/
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+    policy: pull
+
+# Test Job definition
+test:
+  stage: test
+  image: $CI_NODE_IMAGE
+  script:
+    - npm run test
+
+# Deploy Job definition
+deploy:
+  stage: deploy
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest # a Docker provided by GitLab that includes the AWS CLI
+  script:
+    - aws s3 cp --recursive dist s3://bucket-name # copies the dist folder to an aws s3 bucket
+
