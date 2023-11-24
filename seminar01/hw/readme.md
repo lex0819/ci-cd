@@ -18,11 +18,15 @@ https://gitlab.com/lex08191
 
 ### runner
 
+Поставила раннер на свой сервер в докер.
+
+![runner-install](./img/runner-install.png)
+
 Project -> Settings - > CI/CD -> Runners -> New runner
 
-![](./img/runner-created.png)
+Раннер доступен в моем гитлабе
 
-Установлю раннер в докер на облачный сервер позже, в процессе дальнейшего обучения.
+![runner-OK](./img/runner-OK.png.png)
 
 ## Попробовать сохранить артефакт одной из стадий + исключить из папки с артефактами любой файл.
 
