@@ -26,7 +26,7 @@ Project -> Settings - > CI/CD -> Runners -> New runner
 
 Раннер доступен в моем гитлабе
 
-![runner-OK](./img/runner-OK.png.png)
+![runner-OK](./img/runner-OK.png)
 
 ## Попробовать сохранить артефакт одной из стадий + исключить из папки с артефактами любой файл.
 
