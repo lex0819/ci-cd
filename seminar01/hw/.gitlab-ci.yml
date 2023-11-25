@@ -8,28 +8,28 @@ stages:
 build-pr:
   stage: build
   script:
-    - mkdir -p binaries
-    - cd binaries
-    - echo test1 >> file1.txt
-    - echo test2 >> file2.txt
+    - mkdir -p public
+    - cd public
+    - echo test1 >> index.html
+    - echo test2 >> about.html
     - mkdir -p temp
     - cd temp
     - echo test1 >> temp1.txt
     - echo test2 >> temp2.txt
   artifacts:
     paths:
-      - binaries/
+      - public/
     exclude:
-      - binaries/temp/**/*
+      - public/temp/**/*
 
 build1:
   stage: build
   script:
     - echo "Do your build here"
-    - echo one >> house.txt
+    - echo one >> index.html
   artifacts:
     paths:
-      - house.txt
+      - index.html
     expire_in: 30 days
 
 test1:
@@ -37,7 +37,7 @@ test1:
   script:
     - echo "Do a test here"
     - echo "For example run a test suite"
-    - grep one house.txt
+    - grep one index.html
 
 deploy1:
   stage: deploy
