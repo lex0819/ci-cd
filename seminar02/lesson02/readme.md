@@ -1,4 +1,4 @@
-# docker in gitlag
+# docker in gitlab
 
 ## Gitlab Registry
 
