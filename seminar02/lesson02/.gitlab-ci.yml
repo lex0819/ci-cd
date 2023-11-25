@@ -1,0 +1,81 @@
+image: busybox:latest
+
+stages:
+  - build
+  - test
+  - deploy
+variables:
+  IMAGE_TAG: $CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
+
+cache:
+  key:
+    files:
+      - composer.lock
+  paths:
+    - vendor/
+
+before_script:
+  - echo "Before script section"
+  - echo "For example you might run an update here or install a build dependency"
+  - echo "Or perhaps you might print out some debugging details"
+
+after_script:
+  - echo "After script section"
+  - echo "For example you might do some cleanup here"
+
+build1:
+  stage: build
+  script:
+    - echo "Do your build here"
+    - echo one >> house.txt
+    - mkdir -p vendor/
+    - echo "build" > vendor/hello.txt
+    - sleep 60
+
+docker build:
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - docker login -u $GITLAB_CI_USER -p $GITLAB_CI_PASSWORD $CI_REGISTRY
+    - echo $GITLAB_CI_USER $GITLAB_CI_PASSWORD $CI_REGISTRY $CI_REGISTRY_IMAGE:$IMAGE_TAG
+    - docker build -t $CI_REGISTRY_IMAGE:$IMAGE_TAG .
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
+
+test1:
+  stage: test
+  script:
+    - echo "Do a test here"
+    - echo "For example run a test suite"
+    #    - grep one house.txt
+    #    - sleep 60
+    - cat vendor/hello.txt
+    - sleep 60
+
+test2:
+  stage: test
+  script:
+    - echo "Do another parallel test here"
+    - echo "For example run a lint test"
+#    - grep two house.txt
+
+deploy1:
+  stage: deploy
+  script:
+    - echo "Do your deploy here"
+  environment: production
+
+pages:
+  stage: deploy
+  script:
+    - mkdir -p public
+    - cp house.txt public/index.html
+    - echo 404 >> public/404.html
+  artifacts:
+    exclude:
+      - public/404.html
+    paths:
+      - public
+  only:
+    - main
