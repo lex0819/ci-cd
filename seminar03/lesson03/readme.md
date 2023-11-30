@@ -18,3 +18,12 @@ Manual operation in pipeline must be run only manually. This job will not start 
 
 How to stop?
 Operate -> Environments -> choose env -> stop
+
+My Registry token called GITLAB_CI_USER is
+gitlab+deploy-token-3696606
+76ygCB6NodBojyY88R_d
+
+It need for my login and password called
+GITLAB_CI_USER
+GITLAB_CI_PASSWORD
+from my pipeline.

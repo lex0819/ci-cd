@@ -19,6 +19,7 @@
 Add token
 
 Enter name which we came up with usself.
+Teacher wrote GITLAB_CI_USER. It was name for variable of token.
 
 Check three points
 
