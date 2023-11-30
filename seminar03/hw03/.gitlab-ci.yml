@@ -5,7 +5,7 @@ stages:
   - test
   - deploy
   - stop
-  - stop previous jobs
+  - stop previous jobs # найдёт все запущенные pipeline по названии ветки(ref) и остановит их
 
 variables:
   IMAGE_TAG: $CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
@@ -154,3 +154,17 @@ cancel:
                         curl -s --request POST -H "PRIVATE-TOKEN: ${RUNNER_TOKEN}" "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/pipelines/${pipeline}/cancel"; done
           ) || echo "Canceling old pipelines (${OLD_PIPELINES}) failed"
       fi
+
+#pages:
+#  stage: deploy
+#  script:
+#    - mkdir -p public
+#    - cp house.txt public/index.html
+#    - echo 404 >> public/404.html
+#  artifacts:
+#    exclude:
+#    - public/404.html
+#    paths:
+#      - public
+#  only:
+#    - main
