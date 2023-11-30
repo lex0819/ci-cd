@@ -25,3 +25,29 @@ check expand
 
 Key = RUNNER_TOKEN - or another name
 Value = glpat-aKr-ibCNkmjims8YQguW - Personal Access Token which we have already got above
+
+# include
+
+Pipeline editor -> Full Configuration
+
+It shows third party code from templates!
+
+# debug
+
+```yml
+variables:
+  CI_DEBUG_TRACE: 'true'
+```
+
+# template
+
+Template is **.gitlab_ci.yml** file too. And it is in another repository or another instance ect.
+
+We can **include** pipelines to each other.
+
+```yml
+include:
+  local: smoke.gotlab-ci.yml
+```
+
+include remote for remote repository.

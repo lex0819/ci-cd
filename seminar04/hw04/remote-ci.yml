@@ -1,0 +1,2 @@
+remote-test-job:
+  script: echo "Hi from remote REPO testpages!"

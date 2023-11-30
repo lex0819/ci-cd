@@ -1,0 +1,2 @@
+local-test-job:
+  script: echo "Hi from local REPO seminar03!"
